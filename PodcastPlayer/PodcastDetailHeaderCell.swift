@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 class PodcastDetailHeaderCell: UITableViewCell {
-    //MARK: UI Element Properties
-    var artworkImageView: UIImageView = {
+    
+    //MARK: UI Properties
+    let artworkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -20,14 +21,14 @@ class PodcastDetailHeaderCell: UITableViewCell {
         return imageView
     }()
     
-    var nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         return label
     }()
     
-    var artistNameLabel: UILabel = {
+    let artistNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -62,33 +63,9 @@ class PodcastDetailHeaderCell: UITableViewCell {
     
     //MARK: Configuration
     func configure(podcast: Podcast) {
-        let task = URLSession.shared.downloadTask(with: podcast.artworkUrl600) { [unowned self] (url, response, error) in
-            guard let url = url else {
-                print(error?.localizedDescription ?? "Error fetching artwork")
-                return
-            }
-            
-            var data: Data
-            do {
-                data = try Data(contentsOf: url)
-            } catch {
-                print("Error")
-                return
-            }
-            
-            guard let image = UIImage(data: data) else {
-                print(error?.localizedDescription ?? "Error")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.artworkImageView.image = image
-            }
-        }
-        task.resume()
-        
         self.nameLabel.text = podcast.name
         self.artistNameLabel.text = podcast.artistName
+        self.artworkImageView.setImage(withUrl: podcast.artworkUrl600)
     }
 }
 

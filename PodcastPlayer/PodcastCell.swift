@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 class PodcastCell: UITableViewCell {
-    //MARK: UI Element Properties
-    var artworkImageView: UIImageView = {
+    
+    //MARK: UI Properties
+    let artworkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -20,27 +21,27 @@ class PodcastCell: UITableViewCell {
         return imageView
     }()
     
-    var nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    var artistNameLabel: UILabel = {
+    let artistNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    var genresLabel: UILabel = {
+    let genresLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.lightGray
         return label
     }()
     
-    var mainStackView = UIStackView()
-    var innerStackView = UIStackView()
+    let mainStackView = UIStackView()
+    let innerStackView = UIStackView()
     
     //MARK: Initialization
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -80,35 +81,18 @@ class PodcastCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: UITableViewCell
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.artworkImageView.image = nil
+    }
+    
     //MARK: Configuration
     func configure(podcast: Podcast) {
         self.nameLabel.text = podcast.name
         self.artistNameLabel.text = podcast.artistName
         self.genresLabel.text = podcast.genres.joined(separator: ", ")
-        let task = URLSession.shared.downloadTask(with: podcast.artworkUrl100) { [unowned self] (url, response, error) in
-            guard let url = url else {
-                print(error?.localizedDescription ?? "Error fetching artwork")
-                return
-            }
-            
-            var data: Data
-            do {
-                data = try Data(contentsOf: url)
-            } catch {
-                print("Error")
-                return
-            }
-            
-            guard let image = UIImage(data: data) else {
-                print(error?.localizedDescription ?? "Error")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.artworkImageView.image = image
-            }
-        }
-        task.resume()
+        self.artworkImageView.setImage(withUrl: podcast.artworkUrl100)
     }
 }
 

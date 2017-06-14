@@ -12,10 +12,12 @@ import AVFoundation
 
 class PodcastViewController: UIViewController {
     
-    var feedQueue = OperationQueue()
+    //MARK: Properties
+    let feedQueue = OperationQueue()
     var podcast: Podcast?
     var tracks: [Track]?
     
+    //MARK: UI Properties
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +28,7 @@ class PodcastViewController: UIViewController {
         return tableView
     }()
     
+    //MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         //View
@@ -100,7 +103,7 @@ extension PodcastViewController: UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TrackCell.reuseIdentifier, for: indexPath) as! TrackCell
                 cell.contentSizeChanged()
                 
-                guard let track = self.tracks?[indexPath.row] else { return UITableViewCell() }
+                guard let track = self.tracks?[indexPath.row] else { fatalError() }
                 cell.configure(track: track)
                 return cell
             default:

@@ -11,7 +11,7 @@ import UIKit
 class SearchPodcastsTableViewController: UITableViewController {
     
     //MARK: Properties
-    var searchQueue = OperationQueue()
+    let searchQueue = OperationQueue()
     var podcasts: [Podcast]?
     
     //MARK: UI Properties
@@ -46,6 +46,9 @@ class SearchPodcastsTableViewController: UITableViewController {
         self.tableView.register(PodcastCell.self, forCellReuseIdentifier: PodcastCell.reuseIdentifier)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 80.0
+        if #available(iOS 10.0, *) {
+            self.tableView.prefetchDataSource = self
+        }
         //Notifications
         NotificationCenter.default.addObserver(self, selector: #selector(didChangePreferredContentSize), name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
     }
@@ -84,6 +87,12 @@ class SearchPodcastsTableViewController: UITableViewController {
         self.show(podcastViewController, sender: nil)
     }
     
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PodcastCell {
+            cell.artworkImageView.cancelImageDownload()
+        }
+    }
+    
     //MARK: Notification Center
     func didChangePreferredContentSize(notification: Notification) {
         self.tableView.reloadData()
@@ -93,6 +102,17 @@ class SearchPodcastsTableViewController: UITableViewController {
     func rightBarButtonItemTouchUpInside(sender: UIBarButtonItem) {
         self.searchBar.resignFirstResponder()
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SearchPodcastsTableViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let podcast = self.podcasts?[indexPath.row] else {
+                return
+            }
+            NetworkImageLoader.shared.prefetchImage(withUrl: podcast.artworkUrl100)
+        }
     }
 }
 

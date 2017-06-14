@@ -10,21 +10,22 @@ import Foundation
 import UIKit
 
 class TrackCell: UITableViewCell {
-    //MARK: UI Element Properties
-    var nameLabel: UILabel = {
+    
+    //MARK: UI Properties
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         return label
     }()
     
-    var publishDateLabel: UILabel = {
+    let publishDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    var descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
