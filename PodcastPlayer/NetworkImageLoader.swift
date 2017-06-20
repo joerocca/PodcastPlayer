@@ -41,7 +41,7 @@ public class NetworkImageLoader: NSObject {
     public func downloadAndCacheImage(withUrl url: URL, imageView: UIImageView, placeholderImage: UIImage? = nil, cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy){
         //Check if image is available in memory cache. If image is available, apply it to UIImageView and return.
         if let cachedImage = NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) {
-            DispatchQueue.main.async {
+            self.executeOnMainThread {
                 imageView.image = cachedImage
             }
             return
@@ -49,7 +49,9 @@ public class NetworkImageLoader: NSObject {
         
         //Apply placeholder image to UIImageView while we are downloading the image.
         if let placeholderImage = placeholderImage {
-            imageView.image = placeholderImage
+            self.executeOnMainThread {
+                imageView.image = placeholderImage
+            }
         }
         
         //Checks if there is an existing task for the UIImageView. If there is an existing task, check if the existing task's url is equal to url of new task and return if so. If the existing task's url is NOT equal to the url of the new task, cancel the task because the UITableViewCell has been reused and the old image no longer needs to be downloaded.
@@ -70,7 +72,7 @@ public class NetworkImageLoader: NSObject {
                 return
             }
             NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
-            DispatchQueue.main.async {
+            self.executeOnMainThread {
                 imageView.image = image
             }
         }
@@ -103,6 +105,13 @@ public class NetworkImageLoader: NSObject {
             NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
         }
         task.resume()
+    }
+    
+    //MARK: Extras
+    private func executeOnMainThread(closure: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            closure()
+        }
     }
 }
 
