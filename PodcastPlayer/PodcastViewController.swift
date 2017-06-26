@@ -52,9 +52,9 @@ class PodcastViewController: UIViewController {
         
         let parsePodcastTracksOperation = ParsePodcastTracksOperation()
         parsePodcastTracksOperation.addDependency(fetchPodcastTracksOperation)
-        parsePodcastTracksOperation.completionBlock = {
+        parsePodcastTracksOperation.completionBlock = { [unowned parsePodcastTracksOperation] in
+            self.tracks = parsePodcastTracksOperation.tracks
             DispatchQueue.main.async {
-                self.tracks = parsePodcastTracksOperation.tracks
                 self.tableView.reloadData()
             }
         }

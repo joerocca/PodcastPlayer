@@ -134,10 +134,10 @@ extension SearchPodcastsTableViewController: UISearchBarDelegate {
         
         let parsePodcastsOperation = ParsePodcastsOperation()
         parsePodcastsOperation.addDependency(searchPodcastsOperation)
-        parsePodcastsOperation.completionBlock = {
+        parsePodcastsOperation.completionBlock = { [unowned parsePodcastsOperation] in
+            guard let podcasts = parsePodcastsOperation.podcasts else { return }
+            self.podcasts = podcasts
             DispatchQueue.main.async {
-                guard let podcasts = parsePodcastsOperation.podcasts else { return }
-                self.podcasts = podcasts
                 self.tableView.reloadData()
             }
         }
