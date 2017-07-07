@@ -12,7 +12,7 @@ import UIKit
 class PodcastDetailHeaderCell: UITableViewCell {
     
     //MARK: UI Properties
-    let artworkImageView: UIImageView = {
+    private let artworkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -21,14 +21,14 @@ class PodcastDetailHeaderCell: UITableViewCell {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
+    fileprivate let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         return label
     }()
     
-    let artistNameLabel: UILabel = {
+    fileprivate let artistNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

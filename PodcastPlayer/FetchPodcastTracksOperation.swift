@@ -9,7 +9,7 @@
 import Foundation
 
 class FetchPodcastTracksOperation: AsyncOperation {
-    var feedUrl: URL
+    private var feedUrl: URL
     var data: Data?
     
     init(feedUrl: URL) {
@@ -18,7 +18,8 @@ class FetchPodcastTracksOperation: AsyncOperation {
     }
     
     override func main() {
-        let task = URLSession.shared.dataTask(with: feedUrl) { (data, response, error) in
+        let request = URLRequest(url: feedUrl, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             print(data!)
             self.data = data
             self.state = .Finished

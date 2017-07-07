@@ -13,12 +13,12 @@ import AVFoundation
 class PodcastViewController: UIViewController {
     
     //MARK: Properties
-    let feedQueue = OperationQueue()
+    private let feedQueue = OperationQueue()
     var podcast: Podcast?
-    var tracks: [Track]?
+    fileprivate var tracks: [Track]?
     
     //MARK: UI Properties
-    let tableView: UITableView = {
+    fileprivate let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(PodcastDetailHeaderCell.self, forCellReuseIdentifier: PodcastDetailHeaderCell.reuseIdentifier)

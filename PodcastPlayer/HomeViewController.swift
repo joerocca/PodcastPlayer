@@ -10,6 +10,18 @@ import Foundation
 import UIKit
 
 class HomeViewController: UIViewController {
+    //MARK: Properties
+    private let apiClient: APIClient
+    
+    //MARK: Initialization
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: UIViewController
     override func viewDidLoad() {
@@ -25,8 +37,8 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: Actions
-    func rightBarButtonItemTouchUpInside(sender: UIBarButtonItem) {
-        let searchVC = SearchPodcastsTableViewController()
+    @objc private func rightBarButtonItemTouchUpInside(sender: UIBarButtonItem) {
+        let searchVC = SearchPodcastsTableViewController(client: self.apiClient)
         let searchNavC = UINavigationController(rootViewController: searchVC)
         self.present(searchNavC, animated: true, completion: nil)
     }

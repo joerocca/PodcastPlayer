@@ -21,27 +21,27 @@ class PodcastCell: UITableViewCell {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
+    fileprivate let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let artistNameLabel: UILabel = {
+    fileprivate let artistNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let genresLabel: UILabel = {
+    fileprivate let genresLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.lightGray
         return label
     }()
     
-    let mainStackView = UIStackView()
-    let innerStackView = UIStackView()
+    private let mainStackView = UIStackView()
+    private let innerStackView = UIStackView()
     
     //MARK: Initialization
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

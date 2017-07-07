@@ -11,11 +11,11 @@ import UIKit
 class SearchPodcastsTableViewController: UITableViewController {
     
     //MARK: Properties
-    let searchQueue = OperationQueue()
-    var podcasts: [Podcast]?
+    fileprivate let client: iTunesClient
+    fileprivate var podcasts: [Podcast]?
     
     //MARK: UI Properties
-    let searchBar: UISearchBar = {
+    fileprivate let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.tintColor = UIColor.lightGray
@@ -24,6 +24,16 @@ class SearchPodcastsTableViewController: UITableViewController {
         searchBar.returnKeyType = .done
         return searchBar
     }()
+    
+    //MARK: Initialization
+    init(client: APIClient) {
+        self.client = iTunesClient(apiClient: client)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: Deinitialization
     deinit {
@@ -94,12 +104,12 @@ class SearchPodcastsTableViewController: UITableViewController {
     }
     
     //MARK: Notification Center
-    func didChangePreferredContentSize(notification: Notification) {
+    @objc private func didChangePreferredContentSize(notification: Notification) {
         self.tableView.reloadData()
     }
     
     //MARK: Actions
-    func rightBarButtonItemTouchUpInside(sender: UIBarButtonItem) {
+    @objc private func rightBarButtonItemTouchUpInside(sender: UIBarButtonItem) {
         self.searchBar.resignFirstResponder()
         self.dismiss(animated: true, completion: nil)
     }
@@ -123,25 +133,26 @@ extension SearchPodcastsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
+            self.client.cancelCurrentSearchOperation()
             self.podcasts = nil
             self.tableView.reloadData()
             return
         }
         
-        self.searchQueue.cancelAllOperations()
-        
-        let searchPodcastsOperation = SearchPodcastsOperation(query: searchText)
-        
-        let parsePodcastsOperation = ParsePodcastsOperation()
-        parsePodcastsOperation.addDependency(searchPodcastsOperation)
-        parsePodcastsOperation.completionBlock = { [unowned parsePodcastsOperation] in
-            guard let podcasts = parsePodcastsOperation.podcasts else { return }
-            self.podcasts = podcasts
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        self.client.searchPodcasts(withQuery: searchText) { (result) in
+            switch result {
+                case .success(let podcasts):
+                        self.podcasts = podcasts
+                        self.tableView.reloadData()
+                case .failed(let error):
+                    if let error = error as NSError? {
+                        if error.code == NSURLErrorCancelled {
+                            print(error.localizedDescription)
+                            return
+                        }
+                    }
+                    print(error?.localizedDescription ?? "Error searching for podcasts")
             }
         }
-        
-        self.searchQueue.addOperations([searchPodcastsOperation, parsePodcastsOperation], waitUntilFinished: false)
     }
 }

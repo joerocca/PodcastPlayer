@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIImageView {
+public extension UIImageView {
     public func setImage(withUrl url: URL, placeholderImage: UIImage? = nil) {
         NetworkImageLoader.shared.downloadAndCacheImage(withUrl: url, imageView: self, placeholderImage: placeholderImage)
     }

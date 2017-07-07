@@ -13,11 +13,7 @@
 		D800230A1EADA66400FD967C /* JSONConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80023091EADA66400FD967C /* JSONConvertible.swift */; };
 		D800230C1EADA9FD00FD967C /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800230B1EADA9FD00FD967C /* String+Extras.swift */; };
 		D80CBEAF1EE608D000634873 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80CBEAE1EE608D000634873 /* Track.swift */; };
-		D81A858B1EAC2D0A007DA79B /* SearchPodcastsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A858A1EAC2D0A007DA79B /* SearchPodcastsOperation.swift */; };
-		D81A858D1EAC32A0007DA79B /* ParsePodcastsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81A858C1EAC32A0007DA79B /* ParsePodcastsOperation.swift */; };
 		D826AFA31EE72DB900DCD93C /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D826AFA21EE72DB900DCD93C /* TrackCell.swift */; };
-		D84D3B051EB182D000F6CB1D /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D3B041EB182D000F6CB1D /* GroupOperation.swift */; };
-		D84D3B071EB18A5D00F6CB1D /* CustomOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D3B061EB18A5D00F6CB1D /* CustomOperationQueue.swift */; };
 		D852636C1ED61313004B62C2 /* PodcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D852636B1ED61313004B62C2 /* PodcastViewController.swift */; };
 		D8677E931EBBD48A007A689F /* PreferredFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8677E921EBBD48A007A689F /* PreferredFont.swift */; };
 		D8677E951EBD17B5007A689F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8677E941EBD17B5007A689F /* ReusableView.swift */; };
@@ -34,6 +30,9 @@
 		D8A8DE571EAE9D93008A10C5 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8DE561EAE9D93008A10C5 /* JSON.swift */; };
 		D8A8DE591EAE9DA2008A10C5 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */; };
 		D8AFDF3F1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */; };
+		D8B09DFC1F0DF52000CDD721 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B09DFB1F0DF52000CDD721 /* APIClient.swift */; };
+		D8B09DFE1F0DFC8500CDD721 /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B09DFD1F0DFC8500CDD721 /* URLSessionTaskOperation.swift */; };
+		D8B09E001F0EDD3800CDD721 /* iTunesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B09DFF1F0EDD3800CDD721 /* iTunesClient.swift */; };
 		D8C7F94F1EE9C3100017E1CD /* PodcastDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7F94E1EE9C3100017E1CD /* PodcastDetailHeaderCell.swift */; };
 		D8F9133F1EEA4C5300467AF1 /* NetworkImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F9133E1EEA4C5300467AF1 /* NetworkImageLoader.swift */; };
 /* End PBXBuildFile section */
@@ -62,11 +61,7 @@
 		D80023091EADA66400FD967C /* JSONConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONConvertible.swift; sourceTree = "<group>"; };
 		D800230B1EADA9FD00FD967C /* String+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
 		D80CBEAE1EE608D000634873 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
-		D81A858A1EAC2D0A007DA79B /* SearchPodcastsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPodcastsOperation.swift; sourceTree = "<group>"; };
-		D81A858C1EAC32A0007DA79B /* ParsePodcastsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsePodcastsOperation.swift; sourceTree = "<group>"; };
 		D826AFA21EE72DB900DCD93C /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
-		D84D3B041EB182D000F6CB1D /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
-		D84D3B061EB18A5D00F6CB1D /* CustomOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOperationQueue.swift; sourceTree = "<group>"; };
 		D852636B1ED61313004B62C2 /* PodcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastViewController.swift; sourceTree = "<group>"; };
 		D8677E921EBBD48A007A689F /* PreferredFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredFont.swift; sourceTree = "<group>"; };
 		D8677E941EBD17B5007A689F /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
@@ -89,6 +84,9 @@
 		D8A8DE561EAE9D93008A10C5 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+NetworkImageLoader.swift"; sourceTree = "<group>"; };
+		D8B09DFB1F0DF52000CDD721 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		D8B09DFD1F0DFC8500CDD721 /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
+		D8B09DFF1F0EDD3800CDD721 /* iTunesClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesClient.swift; sourceTree = "<group>"; };
 		D8C7F94E1EE9C3100017E1CD /* PodcastDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailHeaderCell.swift; sourceTree = "<group>"; };
 		D8F9133E1EEA4C5300467AF1 /* NetworkImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,13 +119,10 @@
 		D82134101EBA88EB00808CFD /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				D81A858A1EAC2D0A007DA79B /* SearchPodcastsOperation.swift */,
-				D81A858C1EAC32A0007DA79B /* ParsePodcastsOperation.swift */,
 				D8677E981EC22CB0007A689F /* FetchPodcastTracksOperation.swift */,
 				D88DD31B1EC22FF800680945 /* ParsePodcastTracksOperation.swift */,
+				D8B09DFD1F0DFC8500CDD721 /* URLSessionTaskOperation.swift */,
 				D80023031EAD5B9600FD967C /* AsyncOperation.swift */,
-				D84D3B041EB182D000F6CB1D /* GroupOperation.swift */,
-				D84D3B061EB18A5D00F6CB1D /* CustomOperationQueue.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -205,6 +200,8 @@
 				D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */,
 				D8F9133E1EEA4C5300467AF1 /* NetworkImageLoader.swift */,
 				D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */,
+				D8B09DFB1F0DF52000CDD721 /* APIClient.swift */,
+				D8B09DFF1F0EDD3800CDD721 /* iTunesClient.swift */,
 			);
 			name = Systems;
 			sourceTree = "<group>";
@@ -367,27 +364,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D81A858D1EAC32A0007DA79B /* ParsePodcastsOperation.swift in Sources */,
 				D88DD31C1EC22FF800680945 /* ParsePodcastTracksOperation.swift in Sources */,
 				D8677E971EC0D484007A689F /* HomeViewController.swift in Sources */,
 				D8677E991EC22CB0007A689F /* FetchPodcastTracksOperation.swift in Sources */,
+				D8B09E001F0EDD3800CDD721 /* iTunesClient.swift in Sources */,
+				D8B09DFE1F0DFC8500CDD721 /* URLSessionTaskOperation.swift in Sources */,
 				D80CBEAF1EE608D000634873 /* Track.swift in Sources */,
-				D84D3B051EB182D000F6CB1D /* GroupOperation.swift in Sources */,
 				D8A8DE571EAE9D93008A10C5 /* JSON.swift in Sources */,
 				D8F9133F1EEA4C5300467AF1 /* NetworkImageLoader.swift in Sources */,
 				D8C7F94F1EE9C3100017E1CD /* PodcastDetailHeaderCell.swift in Sources */,
+				D8B09DFC1F0DF52000CDD721 /* APIClient.swift in Sources */,
 				D852636C1ED61313004B62C2 /* PodcastViewController.swift in Sources */,
 				D8AFDF3F1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift in Sources */,
 				D8677E931EBBD48A007A689F /* PreferredFont.swift in Sources */,
 				D826AFA31EE72DB900DCD93C /* TrackCell.swift in Sources */,
-				D81A858B1EAC2D0A007DA79B /* SearchPodcastsOperation.swift in Sources */,
 				D8A8DE591EAE9DA2008A10C5 /* JSONParser.swift in Sources */,
 				D80023081EADA62000FD967C /* Podcast+JSONConvertible.swift in Sources */,
 				D80023061EAD9C7900FD967C /* Podcast.swift in Sources */,
 				D8677E951EBD17B5007A689F /* ReusableView.swift in Sources */,
 				D883D0551EB9250500C68B87 /* PodcastCell.swift in Sources */,
 				D80023041EAD5B9600FD967C /* AsyncOperation.swift in Sources */,
-				D84D3B071EB18A5D00F6CB1D /* CustomOperationQueue.swift in Sources */,
 				D8835B7A1EAC103A0098B98E /* AppDelegate.swift in Sources */,
 				D800230C1EADA9FD00FD967C /* String+Extras.swift in Sources */,
 				D883D0501EB91DDA00C68B87 /* SearchPodcastsTableViewController.swift in Sources */,

@@ -10,13 +10,13 @@ import Foundation
 
 class ParsePodcastTracksOperation: Operation {
     var tracks = [Track]()
-    var eName = String()
-    var title = String()
-    var publishDate = String()
-    var guid = String()
-    var desc = String()
-    var url = String()
-    var duration = String()
+    fileprivate var eName = String()
+    fileprivate var title = String()
+    fileprivate var publishDate = String()
+    fileprivate var guid = String()
+    fileprivate var desc = String()
+    fileprivate var url = String()
+    fileprivate var duration = String()
     
     override func main() {
         guard let dataProvider = self.dependencies
@@ -38,12 +38,12 @@ extension ParsePodcastTracksOperation: XMLParserDelegate {
         self.eName = elementName
         
         if elementName == "item" {
-            title = String()
-            publishDate = String()
-            guid = String()
-            desc = String()
-            url = String()
-            duration = String()
+            self.title = String()
+            self.publishDate = String()
+            self.guid = String()
+            self.desc = String()
+            self.url = String()
+            self.duration = String()
         } else if elementName == "enclosure" {
             guard let url = attributeDict["url"],
                 let duration = attributeDict["length"] else {

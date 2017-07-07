@@ -12,20 +12,20 @@ import UIKit
 class TrackCell: UITableViewCell {
     
     //MARK: UI Properties
-    let nameLabel: UILabel = {
+    fileprivate let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         return label
     }()
     
-    let publishDateLabel: UILabel = {
+    fileprivate let publishDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let descriptionLabel: UILabel = {
+    fileprivate let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
