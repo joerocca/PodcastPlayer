@@ -11,6 +11,7 @@ import UIKit
 class SearchPodcastsTableViewController: UITableViewController {
     
     //MARK: Properties
+    fileprivate let apiClient: APIClient
     fileprivate let client: iTunesClient
     fileprivate var podcasts: [Podcast]?
     
@@ -27,6 +28,7 @@ class SearchPodcastsTableViewController: UITableViewController {
     
     //MARK: Initialization
     init(client: APIClient) {
+        self.apiClient = client
         self.client = iTunesClient(apiClient: client)
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,8 +94,8 @@ class SearchPodcastsTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard let podcast = podcasts?[indexPath.row] else { return }
-        let podcastViewController = PodcastViewController()
-        podcastViewController.podcast = podcast
+        let podcastViewController = PodcastViewController(client: self.apiClient, podcast: podcast)
+//        podcastViewController.podcast = podcast
         self.show(podcastViewController, sender: nil)
     }
     

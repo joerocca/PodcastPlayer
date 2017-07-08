@@ -13,8 +13,8 @@ import AVFoundation
 class PodcastViewController: UIViewController {
     
     //MARK: Properties
-    private let feedQueue = OperationQueue()
-    var podcast: Podcast?
+    fileprivate let client: PodcastFeedClient
+    fileprivate let podcast: Podcast
     fileprivate var tracks: [Track]?
     
     //MARK: UI Properties
@@ -27,6 +27,17 @@ class PodcastViewController: UIViewController {
         tableView.estimatedRowHeight = 80.0
         return tableView
     }()
+    
+    //MARK: Initialization
+    init(client: APIClient, podcast: Podcast) {
+        self.client = PodcastFeedClient(apiClient: client)
+        self.podcast = podcast
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: UIViewController
     override func viewDidLoad() {
@@ -44,22 +55,15 @@ class PodcastViewController: UIViewController {
         allConstraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[tableView]|", options: [], metrics: nil, views: viewDict)
         NSLayoutConstraint.activate(allConstraints)
         
-        guard let podcast = self.podcast else {
-            fatalError()
-        }
-        
-        let fetchPodcastTracksOperation = FetchPodcastTracksOperation(feedUrl: podcast.feedUrl)
-        
-        let parsePodcastTracksOperation = ParsePodcastTracksOperation()
-        parsePodcastTracksOperation.addDependency(fetchPodcastTracksOperation)
-        parsePodcastTracksOperation.completionBlock = { [unowned parsePodcastTracksOperation] in
-            self.tracks = parsePodcastTracksOperation.tracks
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        self.client.requestFeed(withFeed: podcast.feedUrl) { (result) in
+            switch result {
+                case .success(let tracks):
+                    self.tracks = tracks
+                    self.tableView.reloadData()
+                case .failed(let error):
+                    print(error?.localizedDescription ?? "Error requesting feed")
             }
         }
-        
-        self.feedQueue.addOperations([fetchPodcastTracksOperation, parsePodcastTracksOperation], waitUntilFinished: false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -95,8 +99,7 @@ extension PodcastViewController: UITableViewDataSource {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: PodcastDetailHeaderCell.reuseIdentifier, for: indexPath) as! PodcastDetailHeaderCell
                 cell.contentSizeChanged()
-                
-                guard let podcast = self.podcast else { fatalError() }
+
                 cell.configure(podcast: podcast)
                 return cell
             case 1:

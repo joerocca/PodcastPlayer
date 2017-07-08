@@ -1,15 +1,15 @@
 //
-//  ParsePodcastTracksOperation.swift
+//  PodcastFeedParser.swift
 //  PodcastPlayer
 //
-//  Created by Joe Rocca on 5/9/17.
+//  Created by Joe Rocca on 7/8/17.
 //  Copyright © 2017 Joe Rocca. All rights reserved.
 //
 
 import Foundation
 
-class ParsePodcastTracksOperation: Operation {
-    var tracks = [Track]()
+class PodcastFeedParser: NSObject {
+    fileprivate var tracks = [Track]()
     fileprivate var eName = String()
     fileprivate var title = String()
     fileprivate var publishDate = String()
@@ -18,22 +18,16 @@ class ParsePodcastTracksOperation: Operation {
     fileprivate var url = String()
     fileprivate var duration = String()
     
-    override func main() {
-        guard let dataProvider = self.dependencies
-            .filter({$0 is FetchPodcastTracksOperation})
-            .first as? FetchPodcastTracksOperation,
-            let data = dataProvider.data else {
-                
-                fatalError()
-        }
-        
+    func parse(data: Data) -> [Track] {
         let parser = XMLParser(data: data)
         parser.delegate = self
         parser.parse()
+        
+        return self.tracks
     }
 }
 
-extension ParsePodcastTracksOperation: XMLParserDelegate {
+extension PodcastFeedParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         self.eName = elementName
         
@@ -68,7 +62,7 @@ extension ParsePodcastTracksOperation: XMLParserDelegate {
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         let trimmedString = string.trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         if self.eName == "title" {
             self.title += trimmedString
         } else if eName == "pubDate" {
