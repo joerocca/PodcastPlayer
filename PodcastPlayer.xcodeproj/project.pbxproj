@@ -25,6 +25,7 @@
 		D8835B9A1EAC103A0098B98E /* PodcastPlayerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8835B991EAC103A0098B98E /* PodcastPlayerUITests.swift */; };
 		D883D0501EB91DDA00C68B87 /* SearchPodcastsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883D04F1EB91DDA00C68B87 /* SearchPodcastsTableViewController.swift */; };
 		D883D0551EB9250500C68B87 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D883D0541EB9250500C68B87 /* PodcastCell.swift */; };
+		D884BCC91F1F262E006D1CD0 /* Date+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = D884BCC81F1F262E006D1CD0 /* Date+Extras.swift */; };
 		D8A8DE571EAE9D93008A10C5 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8DE561EAE9D93008A10C5 /* JSON.swift */; };
 		D8A8DE591EAE9DA2008A10C5 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */; };
 		D8AFDF3F1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */; };
@@ -79,6 +80,7 @@
 		D8835B9B1EAC103A0098B98E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D883D04F1EB91DDA00C68B87 /* SearchPodcastsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPodcastsTableViewController.swift; sourceTree = "<group>"; };
 		D883D0541EB9250500C68B87 /* PodcastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
+		D884BCC81F1F262E006D1CD0 /* Date+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extras.swift"; sourceTree = "<group>"; };
 		D8A8DE561EAE9D93008A10C5 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+NetworkImageLoader.swift"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				D800230B1EADA9FD00FD967C /* String+Extras.swift */,
+				D884BCC81F1F262E006D1CD0 /* Date+Extras.swift */,
 				D8A8DE561EAE9D93008A10C5 /* JSON.swift */,
 				D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */,
 				D8F9133E1EEA4C5300467AF1 /* NetworkImageLoader.swift */,
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8677E971EC0D484007A689F /* HomeViewController.swift in Sources */,
+				D884BCC91F1F262E006D1CD0 /* Date+Extras.swift in Sources */,
 				D8B09E041F10AD5300CDD721 /* PodcastFeedParser.swift in Sources */,
 				D8B09E001F0EDD3800CDD721 /* iTunesClient.swift in Sources */,
 				D8B09DFE1F0DFC8500CDD721 /* URLSessionTaskOperation.swift in Sources */,

@@ -55,13 +55,22 @@ class PodcastViewController: UIViewController {
         allConstraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[tableView]|", options: [], metrics: nil, views: viewDict)
         NSLayoutConstraint.activate(allConstraints)
         
-        self.client.requestFeed(withFeed: podcast.feedUrl) { (result) in
+        self.client.requestFeed(with: podcast.feedUrl) { (result) in
             switch result {
                 case .success(let tracks):
                     self.tracks = tracks
                     self.tableView.reloadData()
                 case .failed(let error):
-                    print(error?.localizedDescription ?? "Error requesting feed")
+                    let errorString = error?.localizedDescription ?? "Error requesting feed"
+                    let alertView = UIAlertController(title: "Feed Error", message: errorString, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                        guard let navigationController = self.navigationController else {
+                            fatalError("Navigation Controller is nil.")
+                        }
+                        navigationController.popViewController(animated: true)
+                    })
+                    alertView.addAction(okAction)
+                    self.present(alertView, animated: true, completion: nil)
             }
         }
     }

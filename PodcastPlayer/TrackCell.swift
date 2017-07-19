@@ -60,15 +60,12 @@ class TrackCell: UITableViewCell {
     //MARK: Configuration
     func configure(track: Track) {
         self.nameLabel.text = track.name
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, d MMM yyyy HH:mm:ss Z"
-        guard let formattedDate = dateFormatter.date(from: track.publishDate) else {
-            fatalError("Error creating date from publish date string")
+
+        if let formattedDateString = track.publishDate.toString(withFormat: "MMM d, yyyy 'at' h:mm a") {
+            self.publishDateLabel.text = formattedDateString
+        } else {
+            self.publishDateLabel.text = "N/A"
         }
-        dateFormatter.dateFormat = "MMM d, yyyy 'at' h:mm a"
-        let formattedDateString = dateFormatter.string(from: formattedDate)
-        self.publishDateLabel.text = formattedDateString
         
         self.descriptionLabel.text = track.desc
     }

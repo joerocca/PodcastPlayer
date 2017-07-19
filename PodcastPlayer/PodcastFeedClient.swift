@@ -24,7 +24,7 @@ struct PodcastFeedClient {
     }
     
     //MARK: Workers
-    func requestFeed(withFeed feedUrl: URL, completion: @escaping (Result) -> ()) {
+    func requestFeed(with feedUrl: URL, completion: @escaping (Result) -> ()) {
         let mainCompletion: (Result) -> Void = { (result: Result) in
             DispatchQueue.main.async {
                 completion(result)
@@ -39,7 +39,11 @@ struct PodcastFeedClient {
                 return
             }
             let feedParser = PodcastFeedParser()
-            let tracks = feedParser.parse(data: data)
+            guard let tracks = feedParser.parse(withData: data) else {
+                let parsingError = NSError(domain: "XMLParserErrorDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Error parsing XML feed."])
+                mainCompletion(.failed(parsingError))
+                return
+            }
             mainCompletion(.success(tracks))
         }
     }

@@ -12,7 +12,7 @@ struct Track {
     //MARK: Properties
     let guid: String
     let name: String
-    let publishDate: String
+    let publishDate: Date
     let url: String
     let desc: String
     let duration: String
