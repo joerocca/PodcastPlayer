@@ -25,10 +25,11 @@ class HomeViewController: UIViewController {
     
     //MARK: UIViewController
     override func viewDidLoad() {
+        //Navigation Controller
+        self.navigationItem.title = "Podcasts"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(rightBarButtonItemTouchUpInside))
         //View
         self.view.backgroundColor = UIColor.white
-        //Navigation Controller
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(rightBarButtonItemTouchUpInside))
     }
     
     override func didReceiveMemoryWarning() {

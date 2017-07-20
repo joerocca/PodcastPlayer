@@ -45,13 +45,13 @@ class SearchPodcastsTableViewController: UITableViewController {
     //MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        //View
-        self.view.backgroundColor = UIColor.white
-        self.clearsSelectionOnViewWillAppear = false
         //Navigation Controller
         self.navigationItem.title = "Search"
         self.navigationItem.titleView = self.searchBar
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(rightBarButtonItemTouchUpInside))
+        //View
+        self.view.backgroundColor = UIColor.white
+        self.clearsSelectionOnViewWillAppear = false
         //Subviews
         self.searchBar.delegate = self
         //Table View
@@ -95,7 +95,6 @@ class SearchPodcastsTableViewController: UITableViewController {
         
         guard let podcast = podcasts?[indexPath.row] else { return }
         let podcastViewController = PodcastViewController(client: self.apiClient, podcast: podcast)
-//        podcastViewController.podcast = podcast
         self.show(podcastViewController, sender: nil)
     }
     

@@ -42,6 +42,8 @@ class PodcastViewController: UIViewController {
     //MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Navigation Controller
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         //View
         self.view.backgroundColor = UIColor.white
         //Subviews
