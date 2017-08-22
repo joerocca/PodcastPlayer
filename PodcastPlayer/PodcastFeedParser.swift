@@ -41,12 +41,10 @@ extension PodcastFeedParser: XMLParserDelegate {
             self.url = String()
             self.duration = String()
         } else if elementName == "enclosure" {
-            guard let url = attributeDict["url"],
-                let duration = attributeDict["length"] else {
+            guard let url = attributeDict["url"] else {
                     return
             }
             self.url = url
-            self.duration = duration
         }
     }
     
@@ -83,6 +81,8 @@ extension PodcastFeedParser: XMLParserDelegate {
             self.guid += trimmedString
         } else if eName == "description" {
             self.desc += trimmedString
+        } else if eName == "itunes:duration" {
+            self.duration += trimmedString
         }
     }
     
