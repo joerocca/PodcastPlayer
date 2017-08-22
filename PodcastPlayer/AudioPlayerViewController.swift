@@ -16,8 +16,8 @@ class AudioPlayerViewController: UIViewController {
     //MARK: Properties
     let podcast: Podcast
     let track: Track
-    var player = AVPlayer()
     let commandCenter = MPRemoteCommandCenter.shared()
+    let player = AVPlayer()
     
     //MARK: Initialization
     init(podcast: Podcast, track: Track) {
