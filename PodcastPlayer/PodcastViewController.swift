@@ -88,7 +88,8 @@ extension PodcastViewController: UITableViewDelegate {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
         guard let track = self.tracks?[indexPath.row] else { return }
-        let audioPlayerViewController = AudioPlayerViewController(podcast: self.podcast, track: track)
+        AudioPlayer.shared.prepareToPlay(podcast: self.podcast, track: track)
+        let audioPlayerViewController = AudioPlayerViewController()
         let audioPlayerVCNavigationController = UINavigationController(rootViewController: audioPlayerViewController)
         self.present(audioPlayerVCNavigationController, animated: true, completion: nil)
     }
