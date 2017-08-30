@@ -61,6 +61,18 @@ class AudioPlayer: NSObject {
             MPMediaItemPropertyArtist: podcast.artistName
         ]
         
+        NetworkImageLoader.shared.downloadAndCacheImage(withUrl: podcast.artworkUrl600) { (image, error) in
+            guard let image = image else {
+                print(error?.localizedDescription ?? "Error downloading image.")
+                return
+            }
+            
+            let mediaImageArtwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+                return image
+            })
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = mediaImageArtwork
+        }
+        
         self.player.currentItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), context: &AudioPlayer.playerItemContext)
         
         guard let url = URL(string: track.url) else {

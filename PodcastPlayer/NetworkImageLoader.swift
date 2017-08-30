@@ -36,22 +36,48 @@ public class NetworkImageLoader: NSObject {
         }
     }
     
-    //MARK: Workers
+    //MARK: Methods
     //Downloads and caches image with URL.
-    public func downloadAndCacheImage(withUrl url: URL, imageView: UIImageView, placeholderImage: UIImage? = nil, cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy){
+    @discardableResult
+    public func downloadAndCacheImage(withUrl url: URL, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy, completion: ((UIImage?, Error?) -> Void)?) -> URLSessionDataTask? {
+        let mainCompletion: (UIImage?, Error?) -> Void = { (image: UIImage?, error: Error?) in
+            DispatchQueue.main.async {
+                completion?(image, error)
+            }
+        }
+        
+        if let cachedImage = NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) {
+            mainCompletion(cachedImage, nil)
+            return nil
+        }
+        
+        let request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 30)
+        let task = NetworkImageLoader.shared.session.dataTask(with: request) { (data, response, error) in
+            guard error == nil,
+                response != nil,
+                let data = data,
+                let image = UIImage(data: data, scale: UIScreen.main.scale) else {
+                    mainCompletion(nil, error)
+                    return
+            }
+            NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
+            mainCompletion(image, nil)
+        }
+        task.resume()
+        return task
+    }
+    
+    //Downloads and caches image with URL and adds it to the provided UIImageView.
+    public func downloadAndCacheImage(withUrl url: URL, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy, imageView: UIImageView, placeholderImage: UIImage? = nil) {
         //Check if image is available in memory cache. If image is available, apply it to UIImageView and return.
         if let cachedImage = NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) {
-            self.executeOnMainThread {
-                imageView.image = cachedImage
-            }
+            imageView.image = cachedImage
             return
         }
         
         //Apply placeholder image to UIImageView while we are downloading the image.
         if let placeholderImage = placeholderImage {
-            self.executeOnMainThread {
-                imageView.image = placeholderImage
-            }
+            imageView.image = placeholderImage
         }
         
         //Checks if there is an existing task for the UIImageView. If there is an existing task, check if the existing task's url is equal to url of new task and return if so. If the existing task's url is NOT equal to the url of the new task, cancel the task because the UITableViewCell has been reused and the old image no longer needs to be downloaded.
@@ -63,24 +89,25 @@ public class NetworkImageLoader: NSObject {
             }
         }
         
-        let request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 30)
-        let task = NetworkImageLoader.shared.session.dataTask(with: request) { (data, response, error) in
-            guard error == nil,
-                response != nil,
-                let data = data,
-                let image = UIImage(data: data, scale: UIScreen.main.scale) else {
+        let imageDownloadCompletionClosure = { [weak imageView] (image: UIImage?, error: Error?) in
+            guard let image = image else {
+                print(error?.localizedDescription ?? "Error downloading image with URL: \(url.absoluteString).")
                 return
             }
-            NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
-            self.executeOnMainThread {
-                imageView.image = image
+            guard let imageView = imageView else {
+                print("UIImageView does not exist.")
+                return
             }
+            imageView.image = image
         }
-        NetworkImageLoader.shared.tasks.setObject(task, forKey: imageView)
-        task.resume()
+        
+        //There is a possibility that the image was downloaded before this is called and a cached image is returned, so we check if task is returned before we add to the tasks NSMapTable.
+        if let task = self.downloadAndCacheImage(withUrl: url, cachePolicy: cachePolicy, completion: imageDownloadCompletionClosure) {
+            NetworkImageLoader.shared.tasks.setObject(task, forKey: imageView)
+        }
     }
     
-    //If an existing task is available for the given UIImageView, it is canceled. If not, return.
+    //If an existing task is available for the provided UIImageView, it is canceled. If not, return.
     public func cancelDownloadAndCache(forImageView imageView: UIImageView) {
         guard let existingTask = NetworkImageLoader.shared.tasks.object(forKey: imageView) else {
             return
@@ -90,28 +117,7 @@ public class NetworkImageLoader: NSObject {
     
     //Downloads image and stores in cache for later use.
     public func prefetchImage(withUrl url: URL) {
-        guard NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) == nil else {
-            return
-        }
-        
-        let request = URLRequest(url: url, cachePolicy: NSURLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval: 30)
-        let task = NetworkImageLoader.shared.session.dataTask(with: request) { (data, response, error) in
-            guard error == nil,
-                response != nil,
-                let data = data,
-                let image = UIImage(data: data, scale: UIScreen.main.scale) else {
-                    return
-            }
-            NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
-        }
-        task.resume()
-    }
-    
-    //MARK: Extras
-    private func executeOnMainThread(closure: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            closure()
-        }
+        self.downloadAndCacheImage(withUrl: url, completion: nil)
     }
 }
 
