@@ -45,15 +45,16 @@ public extension UIImageView {
         }
         
         let imageDownloadCompletionClosure = { [weak self] (image: UIImage?, error: Error?) in
-            guard let image = image else {
-                print(error?.localizedDescription ?? "Error downloading image with URL: \(url.absoluteString).")
-                return
-            }
             guard let imageView = self else {
                 print("UIImageView does not exist.")
                 return
             }
             imageView.setImageTask(nil)
+            
+            guard let image = image else {
+                print(error?.localizedDescription ?? "Error downloading image with URL: \(url.absoluteString).")
+                return
+            }
             imageView.image = image
         }
         

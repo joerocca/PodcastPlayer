@@ -17,7 +17,7 @@ public class NetworkImageLoader: NSObject {
     public static let shared = NetworkImageLoader()
     private let imageMemoryCache: NSCache<NSString, UIImage> = {
         let imageCache = NSCache<NSString, UIImage>()
-        imageCache.name = "ImageCache"
+        imageCache.name = "com.joerocca.NetworkImageLoader.ImageCache"
         imageCache.totalCostLimit = {
             let physicalMemory = ProcessInfo.processInfo.physicalMemory
             let ratio = physicalMemory <= (1024 * 1024 * 512 /* 512 Mb */) ? 0.1 : 0.2
