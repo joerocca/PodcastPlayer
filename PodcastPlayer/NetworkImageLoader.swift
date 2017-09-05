@@ -27,7 +27,7 @@ public class NetworkImageLoader: NSObject {
         }()
         return imageCache
     }()
-    private lazy var session: URLSession = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+    private lazy var session: URLSession = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
     public var memoryCacheSize: Int {
         get {
             return self.imageMemoryCache.totalCostLimit
@@ -36,7 +36,7 @@ public class NetworkImageLoader: NSObject {
             self.imageMemoryCache.totalCostLimit = newValue
         }
     }
-    
+
     //MARK: Methods
     //Downloads and caches image with URL.
     @discardableResult
@@ -73,7 +73,7 @@ public class NetworkImageLoader: NSObject {
         self.downloadAndCacheImage(withUrl: url, completion: nil)
     }
     
-    //Returns the UIImage if it is available in the NSCache.
+    //Returns the UIImage if it is available in the NSCache(Memory Cache).
     public func cachedImage(forUrl url: URL) -> UIImage? {
         guard let cachedImage = NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) else {
             return nil
@@ -82,13 +82,12 @@ public class NetworkImageLoader: NSObject {
     }
 }
 
-extension NetworkImageLoader: URLSessionDelegate {}
-
 extension NetworkImageLoader: URLSessionDataDelegate {
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
         //If response is valid, force it to be cached.
         guard let httpUrlResponse = proposedResponse.response as? HTTPURLResponse,
             httpUrlResponse.statusCode >= 200 && httpUrlResponse.statusCode < 300 else {
+            completionHandler(nil)
             return
         }
         let newProposedResponse = CachedURLResponse(response: proposedResponse.response, data: proposedResponse.data, userInfo: proposedResponse.userInfo, storagePolicy: URLCache.StoragePolicy.allowed)
