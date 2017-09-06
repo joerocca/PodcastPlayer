@@ -1,6 +1,6 @@
 //
 //  NetworkImageLoader.swift
-//  PodcastPlayer
+//  NetworkImageLoader
 //
 //  Created by Joe Rocca on 6/8/17.
 //  Copyright © 2017 Joe Rocca. All rights reserved.
@@ -15,28 +15,9 @@ public class NetworkImageLoader: NSObject {
     
     //MARK: Properties
     public static let shared = NetworkImageLoader()
-    private let imageMemoryCache: NSCache<NSString, UIImage> = {
-        let imageCache = NSCache<NSString, UIImage>()
-        imageCache.name = "com.joerocca.NetworkImageLoader.ImageCache"
-        imageCache.totalCostLimit = {
-            let physicalMemory = ProcessInfo.processInfo.physicalMemory
-            let ratio = physicalMemory <= (1024 * 1024 * 512 /* 512 Mb */) ? 0.1 : 0.2
-            let limit = physicalMemory / UInt64(1 / ratio)
-            let calculatedTotalCostLimit = limit > UInt64(Int.max) ? Int.max : Int(limit)
-            return calculatedTotalCostLimit
-        }()
-        return imageCache
-    }()
+    public let imageCache = ImageCache()
     private lazy var session: URLSession = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-    public var memoryCacheSize: Int {
-        get {
-            return self.imageMemoryCache.totalCostLimit
-        }
-        set {
-            self.imageMemoryCache.totalCostLimit = newValue
-        }
-    }
-
+    
     //MARK: Methods
     //Downloads and caches image with URL.
     @discardableResult
@@ -47,13 +28,13 @@ public class NetworkImageLoader: NSObject {
             }
         }
         
-        if let cachedImage = self.cachedImage(forUrl: url) {
+        if let cachedImage = self.imageCache.memoryCachedImage(forUrl: url) {
             mainCompletion(cachedImage, nil)
             return nil
         }
         
         let request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 30)
-        let task = NetworkImageLoader.shared.session.dataTask(with: request) { (data, response, error) in
+        let task = self.session.dataTask(with: request) { (data, response, error) in
             guard error == nil,
                 response != nil,
                 let data = data,
@@ -61,7 +42,7 @@ public class NetworkImageLoader: NSObject {
                     mainCompletion(nil, error)
                     return
             }
-            NetworkImageLoader.shared.imageMemoryCache.setObject(image, forKey: url.absoluteString as NSString)
+            self.imageCache.store(image, forKey: url.absoluteString)
             mainCompletion(image, nil)
         }
         task.resume()
@@ -71,14 +52,6 @@ public class NetworkImageLoader: NSObject {
     //Downloads image and stores in cache for later use.
     public func prefetchImage(withUrl url: URL) {
         self.downloadAndCacheImage(withUrl: url, completion: nil)
-    }
-    
-    //Returns the UIImage if it is available in the NSCache(Memory Cache).
-    public func cachedImage(forUrl url: URL) -> UIImage? {
-        guard let cachedImage = NetworkImageLoader.shared.imageMemoryCache.object(forKey: url.absoluteString as NSString) else {
-            return nil
-        }
-        return cachedImage
     }
 }
 

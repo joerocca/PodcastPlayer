@@ -1,6 +1,6 @@
 //
 //  UIImageView+NetworkImageLoader.swift
-//  PodcastPlayer
+//  NetworkImageLoader
 //
 //  Created by Joe Rocca on 6/16/17.
 //  Copyright © 2017 Joe Rocca. All rights reserved.
@@ -25,7 +25,7 @@ public extension UIImageView {
     //MARK: Methods
     public func setImage(withUrl url: URL, placeholderImage: UIImage? = nil, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) {
         //Check if image is available in memory cache. If image is available, apply it to UIImageView and return.
-        if let cachedImage = NetworkImageLoader.shared.cachedImage(forUrl: url) {
+        if let cachedImage = NetworkImageLoader.shared.imageCache.memoryCachedImage(forUrl: url) {
             self.image = cachedImage
             return
         }

@@ -13,6 +13,7 @@
 		D800230A1EADA66400FD967C /* JSONConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80023091EADA66400FD967C /* JSONConvertible.swift */; };
 		D800230C1EADA9FD00FD967C /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800230B1EADA9FD00FD967C /* String+Extras.swift */; };
 		D80CBEAF1EE608D000634873 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80CBEAE1EE608D000634873 /* Track.swift */; };
+		D815F0C71F5F5C9A0084F69B /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D815F0C61F5F5C9A0084F69B /* ImageCache.swift */; };
 		D8182ED01F4C929400E60AD7 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8182ECF1F4C929400E60AD7 /* AudioPlayerViewController.swift */; };
 		D826AFA31EE72DB900DCD93C /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D826AFA21EE72DB900DCD93C /* TrackCell.swift */; };
 		D852636C1ED61313004B62C2 /* PodcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D852636B1ED61313004B62C2 /* PodcastViewController.swift */; };
@@ -64,6 +65,7 @@
 		D80023091EADA66400FD967C /* JSONConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONConvertible.swift; sourceTree = "<group>"; };
 		D800230B1EADA9FD00FD967C /* String+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
 		D80CBEAE1EE608D000634873 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		D815F0C61F5F5C9A0084F69B /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		D8182ECF1F4C929400E60AD7 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		D826AFA21EE72DB900DCD93C /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		D852636B1ED61313004B62C2 /* PodcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				D8A8DE561EAE9D93008A10C5 /* JSON.swift */,
 				D8A8DE581EAE9DA2008A10C5 /* JSONParser.swift */,
 				D8F9133E1EEA4C5300467AF1 /* NetworkImageLoader.swift */,
+				D815F0C61F5F5C9A0084F69B /* ImageCache.swift */,
 				D8AFDF3E1EF4978E009023C4 /* UIImageView+NetworkImageLoader.swift */,
 				D8B09DFB1F0DF52000CDD721 /* APIClient.swift */,
 				D8B09DFF1F0EDD3800CDD721 /* iTunesClient.swift */,
@@ -399,6 +402,7 @@
 				D8835B7A1EAC103A0098B98E /* AppDelegate.swift in Sources */,
 				D800230C1EADA9FD00FD967C /* String+Extras.swift in Sources */,
 				D883D0501EB91DDA00C68B87 /* SearchPodcastsTableViewController.swift in Sources */,
+				D815F0C71F5F5C9A0084F69B /* ImageCache.swift in Sources */,
 				D800230A1EADA66400FD967C /* JSONConvertible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
