@@ -120,22 +120,22 @@ class AudioPlayer: NSObject {
     }
     
     //MARK: Actions
-    func playAction(sender: MPRemoteCommand) {
+    @objc private func playAction(sender: MPRemoteCommand) {
         self.player.play()
     }
     
-    func pauseAction(sender: MPRemoteCommand) {
+    @objc private func pauseAction(sender: MPRemoteCommand) {
         self.player.pause()
     }
     
-    func seekForwardAction(sender: MPSkipIntervalCommand) {
+    @objc private func seekForwardAction(sender: MPSkipIntervalCommand) {
         let currentTime = CMTimeGetSeconds(player.currentTime())
         let seekSeconds = currentTime + 30
         let seekTime = CMTimeMakeWithSeconds(seekSeconds, Int32(NSEC_PER_SEC))
         self.player.seek(to: seekTime)
     }
     
-    func seekBackwardAction(sender: MPSkipIntervalCommand) {
+    @objc private func seekBackwardAction(sender: MPSkipIntervalCommand) {
         let currentTime = CMTimeGetSeconds(player.currentTime())
         let seekSeconds = currentTime - 30
         let seekTime = CMTimeMakeWithSeconds(seekSeconds, Int32(NSEC_PER_SEC))

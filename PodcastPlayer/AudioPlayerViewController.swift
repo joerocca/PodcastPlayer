@@ -26,7 +26,7 @@ class AudioPlayerViewController: UIViewController {
     }
     
     //MARK: Actions
-    func doneButtonAction(sender: UIButton) {
+    @objc private func doneButtonAction(sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
 }
