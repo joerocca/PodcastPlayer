@@ -39,15 +39,18 @@ public class ImageCache {
     }
     
     //Returns the UIImage if it is available in the memory cache.
-    public func memoryCachedImage(forUrl url: URL) -> UIImage? {
-        guard let cachedImage = self.memoryCache.object(forKey: url.absoluteString as NSString) else {
+    public func memoryCachedImage(forKey key: String) -> UIImage? {
+        guard let cachedImage = self.memoryCache.object(forKey: key as NSString) else {
             return nil
         }
         return cachedImage
     }
     
     //Returns the UIImage if it is available in the disk cache.
-    public func diskCachedImage(forUrl url: URL) -> UIImage? {
+    public func diskCachedImage(forKey key: String) -> UIImage? {
+        guard let url = URL(string: key) else {
+            return nil
+        }
         let request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
         guard let diskCachedResponse = URLCache.shared.cachedResponse(for: request),
             let diskCachedImage = UIImage(data: diskCachedResponse.data, scale: UIScreen.main.scale) else {

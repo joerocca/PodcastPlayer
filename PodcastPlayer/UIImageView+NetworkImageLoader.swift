@@ -13,6 +13,9 @@ import UIKit
 private var imageTaskKey: Void?
 
 public extension UIImageView {
+    //MARK: Type Aliases
+     public typealias setImageCompletion = (UIImage?, Error?) -> Void
+    
     //MARK: Properties
     private var imageTask: URLSessionTask? {
         return objc_getAssociatedObject(self, &imageTaskKey) as? URLSessionTask
@@ -23,10 +26,12 @@ public extension UIImageView {
     }
     
     //MARK: Methods
-    public func setImage(withUrl url: URL, placeholderImage: UIImage? = nil, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy) {
+    public func setImage(withUrl url: URL, placeholderImage: UIImage? = nil, forceRefresh: Bool = false, completion: setImageCompletion? = nil) {
         //Check if image is available in memory cache. If image is available, apply it to UIImageView and return.
-        if let cachedImage = NetworkImageLoader.shared.imageCache.memoryCachedImage(forUrl: url) {
+        if let cachedImage = NetworkImageLoader.shared.imageCache.memoryCachedImage(forKey: url.absoluteString),
+            forceRefresh == false {
             self.image = cachedImage
+            completion?(cachedImage, nil)
             return
         }
         
@@ -45,21 +50,16 @@ public extension UIImageView {
         }
         
         let imageDownloadCompletionClosure = { [weak self] (image: UIImage?, error: Error?) in
-            guard let imageView = self else {
-                print("UIImageView does not exist.")
-                return
+            if let imageView = self,
+                let image = image {
+                imageView.setImageTask(nil)
+                imageView.image = image
             }
-            imageView.setImageTask(nil)
-            
-            guard let image = image else {
-                print(error?.localizedDescription ?? "Error downloading image with URL: \(url.absoluteString).")
-                return
-            }
-            imageView.image = image
+            completion?(image, error)
         }
         
         //There is a possibility that the image was downloaded before this is called and a cached image is returned, so we check if task is returned before we add to the task to the UIImageView.
-        if let task = NetworkImageLoader.shared.downloadAndCacheImage(withUrl: url, cachePolicy: cachePolicy, completion: imageDownloadCompletionClosure) {
+        if let task = NetworkImageLoader.shared.downloadAndCacheImage(withUrl: url, forceRefresh: forceRefresh, completion: imageDownloadCompletionClosure) {
             self.setImageTask(task)
         }
     }

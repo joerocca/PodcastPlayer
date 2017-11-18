@@ -21,18 +21,20 @@ public class NetworkImageLoader: NSObject {
     //MARK: Methods
     //Downloads and caches image with URL.
     @discardableResult
-    public func downloadAndCacheImage(withUrl url: URL, cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy, completion: downloadAndCacheCompletion?) -> URLSessionDataTask? {
+    public func downloadAndCacheImage(withUrl url: URL, forceRefresh: Bool = false, completion: downloadAndCacheCompletion?) -> URLSessionDataTask? {
         let mainCompletion: downloadAndCacheCompletion = { (image: UIImage?, error: Error?) in
             DispatchQueue.main.async {
                 completion?(image, error)
             }
         }
         
-        if let cachedImage = self.imageCache.memoryCachedImage(forUrl: url) {
+        if let cachedImage = self.imageCache.memoryCachedImage(forKey: url.absoluteString),
+            forceRefresh == false {
             mainCompletion(cachedImage, nil)
             return nil
         }
         
+        let cachePolicy = forceRefresh == false ? URLRequest.CachePolicy.useProtocolCachePolicy : URLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
         let request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 30)
         let task = self.session.dataTask(with: request) { (data, response, error) in
             guard error == nil,
